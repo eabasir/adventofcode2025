@@ -16,7 +16,7 @@ func main() {
 
 	password := 0
 
-	for i, line := range lines {
+	for _, line := range lines {
 
 		vals := re.FindStringSubmatch(line)
 		if vals != nil {
@@ -30,21 +30,28 @@ func main() {
 				current_pos += steps
 			}
 
-			if current_pos > 99 {
-				current_pos -= 100
-			}
-
-			if current_pos < 0 {
-				current_pos += 100
-			}
-
+			current_pos = normalize(current_pos)
 			if current_pos == 0 {
 				password += 1
 			}
-			fmt.Println(i, line, current_pos)
-
 		}
 	}
 
 	fmt.Println("Password: ", password)
+}
+
+func normalize(val int) int {
+
+	sign := -1
+
+	if val < 0 {
+		sign = 1
+	}
+
+	for val < 0 || val > 99 {
+		val += sign * 100
+	}
+
+	return val
+
 }
