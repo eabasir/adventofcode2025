@@ -1,17 +1,50 @@
 package main
 
 import (
+	"adventofcode2025/utils"
 	"fmt"
-	"os"
+	"regexp"
+	"strconv"
 )
 
 func main() {
-	input, err := os.ReadFile("input.txt")
-	if err != nil {
-		fmt.Println("Error reading input:", err)
-		return
+	lines := utils.ReadInput("day1/p1/input.txt")
+
+	current_pos := 50
+
+	re := regexp.MustCompile(`^(.)(\d+)$`)
+
+	password := 0
+
+	for i, line := range lines {
+
+		vals := re.FindStringSubmatch(line)
+		if vals != nil {
+			direction := vals[1]
+			steps, _ := strconv.Atoi(vals[2])
+
+			switch direction {
+			case "L":
+				current_pos -= steps
+			case "R":
+				current_pos += steps
+			}
+
+			if current_pos > 99 {
+				current_pos -= 100
+			}
+
+			if current_pos < 0 {
+				current_pos += 100
+			}
+
+			if current_pos == 0 {
+				password += 1
+			}
+			fmt.Println(i, line, current_pos)
+
+		}
 	}
 
-	// TODO: Implement solution
-	fmt.Println("Input length:", len(input))
+	fmt.Println("Password: ", password)
 }
