@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	lines := utils.ReadInput("day1/p1/input.txt")
+	lines := utils.ReadInput("day1/input.txt")
 
 	current_pos := 50
 
